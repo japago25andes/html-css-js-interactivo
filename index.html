@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HTML · CSS · JS — Las 3 capas de la web</title>
+  <meta name="description" content="Página interactiva para entender la diferencia entre HTML, CSS y JavaScript y cómo se complementan en el desarrollo web.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏠</text></svg>">
+
+  <!-- Tema guardado (se aplica antes de pintar para evitar parpadeos) -->
+  <script>
+    (function () {
+      var tema = null;
+      try { tema = localStorage.getItem('tema'); } catch (e) {}
+      if (!tema) tema = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      document.documentElement.dataset.theme = tema;
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="bg-blobs" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <!-- ============ NAVEGACIÓN ============ -->
+  <header class="nav">
+    <a class="brand" href="#inicio">
+      <span class="brand-dots"><i class="d-html"></i><i class="d-css"></i><i class="d-js"></i></span>
+      Web en 3 capas
+    </a>
+    <nav class="nav-links">
+      <a href="#separado">Por separado</a>
+      <a href="#laboratorio">Laboratorio</a>
+      <a href="#juntos">Juntos</a>
+      <a href="#navegador">Navegador</a>
+      <a href="#quiz">Quiz</a>
+    </nav>
+    <button class="theme-btn" id="theme-btn" aria-label="Cambiar entre tema claro y oscuro">🌙</button>
+  </header>
+
+  <main>
+    <!-- ============ 1. INICIO: LA CASA ============ -->
+    <section id="inicio" class="hero">
+      <div class="hero-text reveal">
+        <span class="eyebrow">Fundamentos del desarrollo web</span>
+        <h1>Toda página web se construye en <span class="grad">3 capas</span></h1>
+        <p class="lead">
+          Piensa en una página como una casa: <b class="c-html">HTML</b> levanta la estructura,
+          <b class="c-css">CSS</b> la pinta y decora, y <b class="c-js">JavaScript</b> le conecta la electricidad.
+          Enciende cada capa y observa qué pasa.
+        </p>
+
+        <div class="layer-toggles" id="house-toggles">
+          <button class="toggle t-html" data-layer="html" aria-pressed="false">
+            <span class="t-icon">🧱</span>
+            <span class="t-label"><b>HTML</b><small>Construir</small></span>
+            <span class="switch" aria-hidden="true"></span>
+          </button>
+          <button class="toggle t-css" data-layer="css" aria-pressed="false">
+            <span class="t-icon">🎨</span>
+            <span class="t-label"><b>CSS</b><small>Pintar</small></span>
+            <span class="switch" aria-hidden="true"></span>
+          </button>
+          <button class="toggle t-js" data-layer="js" aria-pressed="false">
+            <span class="t-icon">⚡</span>
+            <span class="t-label"><b>JS</b><small>Encender</small></span>
+            <span class="switch" aria-hidden="true"></span>
+          </button>
+        </div>
+
+        <div class="hero-actions">
+          <button class="btn btn-primary" id="house-all">✨ Las tres juntas</button>
+          <button class="btn btn-ghost" id="house-reset">↺ Reiniciar</button>
+        </div>
+        <p class="status" id="house-status" aria-live="polite"></p>
+      </div>
+
+      <div class="hero-visual reveal">
+        <div class="house-card" id="house-card">
+          <div class="sky sky-day"></div>
+          <div class="sky sky-night"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <svg class="house" viewBox="0 0 420 340" role="img" aria-label="Casa que representa las capas de una página web">
+            <defs>
+              <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+                <feGaussianBlur stdDeviation="7" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+
+            <circle class="h-sun" cx="350" cy="62" r="24"/>
+            <rect class="h-grass" x="0" y="300" width="420" height="40"/>
+            <line class="h-ground" x1="20" y1="300" x2="400" y2="300"/>
+
+            <!-- Estructura (HTML) -->
+            <rect class="h-part h-chimney" style="--d:.5s" pathLength="100" x="270" y="78" width="32" height="62"/>
+            <rect class="h-part h-wall" style="--d:0s" pathLength="100" x="90" y="150" width="240" height="150"/>
+            <polygon class="h-part h-roof" style="--d:.25s" pathLength="100" points="70,155 210,60 350,155"/>
+            <rect class="h-part h-door" style="--d:.6s" pathLength="100" x="185" y="215" width="50" height="85" rx="4"/>
+            <rect class="h-part h-win" style="--d:.75s" pathLength="100" x="115" y="180" width="50" height="45" rx="3"/>
+            <rect class="h-part h-win" style="--d:.85s" pathLength="100" x="255" y="180" width="50" height="45" rx="3"/>
+
+            <!-- Luces (JS) -->
+            <rect class="h-glow" x="115" y="180" width="50" height="45" rx="3"/>
+            <rect class="h-glow" style="animation-delay:.25s" x="255" y="180" width="50" height="45" rx="3"/>
+            <circle class="h-lamp" cx="210" cy="203" r="5"/>
+
+            <path class="h-part h-frame" style="--d:1s" pathLength="100" d="M140 180v45M115 202.5h50M280 180v45M255 202.5h50"/>
+            <circle class="h-part h-knob" style="--d:1.1s" pathLength="100" cx="225" cy="260" r="3.5"/>
+
+            <!-- Decoración (CSS) -->
+            <g class="h-bushes">
+              <circle cx="70" cy="292" r="18"/><circle cx="95" cy="296" r="13"/>
+              <circle cx="345" cy="294" r="16"/><circle cx="368" cy="297" r="12"/>
+            </g>
+
+            <!-- Humo (JS) -->
+            <g class="h-smoke">
+              <circle cx="286" cy="66" r="7"/><circle cx="290" cy="66" r="9"/><circle cx="283" cy="66" r="6"/>
+            </g>
+
+            <!-- Etiquetas que se ven cuando solo hay HTML -->
+            <g class="h-tags">
+              <text x="210" y="122" text-anchor="middle">&lt;techo&gt;</text>
+              <text x="140" y="245" text-anchor="middle">&lt;ventana&gt;</text>
+              <text x="280" y="245" text-anchor="middle">&lt;ventana&gt;</text>
+              <text x="210" y="320" text-anchor="middle">&lt;puerta&gt;</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 2. CADA UNO POR SEPARADO ============ -->
+    <section id="separado" class="section">
+      <header class="section-head reveal">
+        <span class="eyebrow">Paso 1 · Conócelos</span>
+        <h2>Cada uno por separado</h2>
+        <p>Los tres viven en archivos distintos y cada uno responde a una pregunta diferente.</p>
+      </header>
+
+      <div class="tabs reveal" role="tablist" aria-label="Tecnologías">
+        <button class="tab t-html active" role="tab" data-tab="html" aria-selected="true">🧱 HTML</button>
+        <button class="tab t-css" role="tab" data-tab="css" aria-selected="false">🎨 CSS</button>
+        <button class="tab t-js" role="tab" data-tab="js" aria-selected="false">⚡ JavaScript</button>
+      </div>
+
+      <div class="panels reveal">
+        <!-- HTML -->
+        <article class="panel p-html active" data-panel="html" role="tabpanel">
+          <div class="panel-info">
+            <span class="big-q">¿<b>QUÉ</b> hay en la página?</span>
+            <h3>HTML · La estructura</h3>
+            <p class="sub">HyperText Markup Language — lenguaje de <em>marcado</em></p>
+            <ul class="points">
+              <li>Usa <strong>etiquetas</strong> como <code>&lt;h1&gt;</code>, <code>&lt;p&gt;</code>, <code>&lt;img&gt;</code> o <code>&lt;button&gt;</code>.</li>
+              <li>Organiza el contenido y le da <strong>significado</strong>: esto es un título, esto un párrafo, esto un botón.</li>
+              <li><strong>No es un lenguaje de programación</strong>: no hace cálculos ni toma decisiones.</li>
+              <li>Es la <strong>base de todo</strong>: sin HTML no hay nada que mostrar.</li>
+            </ul>
+            <p class="analogy">🏠 En la casa: las <b>paredes, puertas y ventanas</b>.</p>
+          </div>
+          <div class="panel-demo">
+            <div class="mini-editor"><div class="mini-editor-bar"><i></i><i></i><i></i><span>index.html</span></div><pre class="code"><code data-sample="html"></code></pre></div>
+            <div class="mini-result"><span class="mini-result-label">Resultado</span><iframe data-frame="html" sandbox="allow-scripts" title="Resultado solo HTML"></iframe></div>
+            <p class="note">El navegador usa sus estilos por defecto: letra Times, fondo blanco y un botón gris que no hace nada.</p>
+          </div>
+        </article>
+
+        <!-- CSS -->
+        <article class="panel p-css" data-panel="css" role="tabpanel" hidden>
+          <div class="panel-info">
+            <span class="big-q">¿<b>CÓMO</b> se ve?</span>
+            <h3>CSS · La apariencia</h3>
+            <p class="sub">Cascading Style Sheets — hojas de estilo en cascada</p>
+            <ul class="points">
+              <li><strong>Selecciona</strong> elementos del HTML y les aplica estilos.</li>
+              <li>Controla <strong>colores, tipografías, tamaños, espacios</strong> y posiciones.</li>
+              <li>Adapta el diseño al celular o al computador (<strong>responsive</strong>).</li>
+              <li>Crea <strong>transiciones y animaciones</strong>.</li>
+            </ul>
+            <p class="analogy">🏠 En la casa: la <b>pintura, los colores y la decoración</b>.</p>
+          </div>
+          <div class="panel-demo">
+            <div class="mini-editor"><div class="mini-editor-bar"><i></i><i></i><i></i><span>styles.css</span></div><pre class="code"><code data-sample="css"></code></pre></div>
+            <div class="mini-result"><span class="mini-result-label">Resultado</span><iframe data-frame="css" sandbox="allow-scripts" title="Resultado HTML con CSS"></iframe></div>
+            <p class="note">Es <b>el mismo HTML</b> de la pestaña anterior. Solo agregamos CSS… y el botón sigue sin hacer nada.</p>
+          </div>
+        </article>
+
+        <!-- JS -->
+        <article class="panel p-js" data-panel="js" role="tabpanel" hidden>
+          <div class="panel-info">
+            <span class="big-q">¿Qué <b>HACE</b>?</span>
+            <h3>JavaScript · El comportamiento</h3>
+            <p class="sub">Lenguaje de <em>programación</em> de la web</p>
+            <ul class="points">
+              <li>Reacciona a <strong>eventos</strong>: clics, teclas, scroll, formularios…</li>
+              <li><strong>Modifica</strong> el HTML y el CSS mientras la página está abierta (el DOM).</li>
+              <li>Toma <strong>decisiones</strong>, hace <strong>cálculos</strong> y guarda datos.</li>
+              <li>Se comunica con <strong>servidores</strong> para traer o enviar información.</li>
+            </ul>
+            <p class="analogy">🏠 En la casa: la <b>electricidad, los interruptores y los bombillos</b>.</p>
+          </div>
+          <div class="panel-demo">
+            <div class="mini-editor"><div class="mini-editor-bar"><i></i><i></i><i></i><span>script.js</span></div><pre class="code"><code data-sample="js"></code></pre></div>
+            <div class="mini-result"><span class="mini-result-label">Resultado · ¡haz clic en el botón!</span><iframe data-frame="js" sandbox="allow-scripts" title="Resultado HTML con JavaScript"></iframe></div>
+            <p class="note">Mismo HTML, <b>sin CSS</b>: se ve simple, pero ahora el botón cuenta tus clics.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 3. LABORATORIO ============ -->
+    <section id="laboratorio" class="section">
+      <header class="section-head reveal">
+        <span class="eyebrow">Paso 2 · Experimenta</span>
+        <h2>Laboratorio: enciende y apaga cada capa</h2>
+        <p>Lo que ves en el navegador es <b>exactamente</b> el código del editor, ejecutándose de verdad. Prueba todas las combinaciones.</p>
+      </header>
+
+      <div class="lab-controls reveal">
+        <div class="layer-toggles" id="lab-toggles">
+          <button class="toggle t-html" data-layer="html" aria-pressed="true">
+            <span class="t-icon">🧱</span><span class="t-label"><b>HTML</b><small>index.html</small></span><span class="switch" aria-hidden="true"></span>
+          </button>
+          <button class="toggle t-css" data-layer="css" aria-pressed="false">
+            <span class="t-icon">🎨</span><span class="t-label"><b>CSS</b><small>styles.css</small></span><span class="switch" aria-hidden="true"></span>
+          </button>
+          <button class="toggle t-js" data-layer="js" aria-pressed="false">
+            <span class="t-icon">⚡</span><span class="t-label"><b>JS</b><small>script.js</small></span><span class="switch" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="presets">
+          <button class="chip" data-preset="none">Ninguna</button>
+          <button class="chip" data-preset="all">✨ Las tres</button>
+        </div>
+      </div>
+
+      <div class="lab-grid reveal">
+        <div class="browser">
+          <div class="browser-bar">
+            <span class="dots"><i></i><i></i><i></i></span>
+            <span class="url">🔒 mi-pagina.html</span>
+            <span class="badges" id="lab-badges"></span>
+          </div>
+          <div class="browser-view">
+            <iframe id="lab-frame" sandbox="allow-scripts" title="Resultado del laboratorio"></iframe>
+            <div class="empty-chip" id="lab-empty">Sin HTML no hay contenido que mostrar</div>
+          </div>
+          <div class="console">
+            <div class="console-head"><span>▸ Consola</span><button id="console-clear">Limpiar</button></div>
+            <div class="console-body" id="console" aria-live="polite"></div>
+          </div>
+        </div>
+
+        <div class="editor" id="editor">
+          <div class="editor-tabs" role="tablist">
+            <button class="etab e-html" data-file="html">index.html</button>
+            <button class="etab e-css" data-file="css">styles.css</button>
+            <button class="etab e-js" data-file="js">script.js</button>
+          </div>
+          <div class="editor-body">
+            <pre class="code" id="lab-code"><code></code></pre>
+            <div class="editor-off" id="editor-off"><span>⏻</span>Este archivo está <b>apagado</b>: el navegador no lo carga.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lab-explain reveal" id="lab-explain">
+        <div class="le-badge" id="le-badge"></div>
+        <div>
+          <h3 id="le-title"></h3>
+          <p id="le-text"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4. CÓMO SE COMPLEMENTAN ============ -->
+    <section id="juntos" class="section">
+      <header class="section-head reveal">
+        <span class="eyebrow">Paso 3 · Conecta</span>
+        <h2>¿Cómo se complementan?</h2>
+        <p>Toca cada zona del diagrama para ver qué obtienes con cada combinación.</p>
+      </header>
+
+      <div class="venn-wrap reveal">
+        <div class="venn" id="venn" data-active="html css js">
+          <svg viewBox="0 0 500 380" aria-hidden="true">
+            <circle class="vc vc-html" cx="200" cy="150" r="110"/>
+            <circle class="vc vc-css" cx="300" cy="150" r="110"/>
+            <circle class="vc vc-js" cx="250" cy="236.6" r="110"/>
+            <text class="vt vt-html" x="62" y="40">HTML</text>
+            <text class="vt vt-css" x="438" y="40" text-anchor="end">CSS</text>
+            <text class="vt vt-js" x="250" y="374" text-anchor="middle">JS</text>
+          </svg>
+          <button class="vr" data-region="html" style="left:29.4%;top:31.3%" aria-label="Solo HTML">🧱</button>
+          <button class="vr" data-region="css" style="left:70.6%;top:31.3%" aria-label="Solo CSS">🎨</button>
+          <button class="vr" data-region="js" style="left:50%;top:78.4%" aria-label="Solo JS">⚡</button>
+          <button class="vr" data-region="html css" style="left:50%;top:23.7%" aria-label="HTML y CSS">🧱🎨</button>
+          <button class="vr" data-region="html js" style="left:34.6%;top:58.7%" aria-label="HTML y JS">🧱⚡</button>
+          <button class="vr" data-region="css js" style="left:65.4%;top:58.7%" aria-label="CSS y JS">🎨⚡</button>
+          <button class="vr vr-all active" data-region="html css js" style="left:50%;top:47.1%" aria-label="Las tres juntas">✨</button>
+        </div>
+
+        <div class="venn-info" id="venn-info" aria-live="polite">
+          <div class="vi-layers" id="vi-layers"></div>
+          <h3 id="vi-title"></h3>
+          <p id="vi-text"></p>
+          <div class="vi-meter" id="vi-meter"></div>
+        </div>
+      </div>
+
+      <div class="table-wrap reveal">
+        <table class="compare">
+          <thead>
+            <tr><th></th><th class="c-html">🧱 HTML</th><th class="c-css">🎨 CSS</th><th class="c-js">⚡ JavaScript</th></tr>
+          </thead>
+          <tbody>
+            <tr><th>Pregunta que responde</th><td>¿Qué hay?</td><td>¿Cómo se ve?</td><td>¿Qué hace?</td></tr>
+            <tr><th>Tipo de lenguaje</th><td>Marcado</td><td>Estilos</td><td>Programación</td></tr>
+            <tr><th>Archivo</th><td><code>.html</code></td><td><code>.css</code></td><td><code>.js</code></td></tr>
+            <tr><th>En la casa</th><td>Paredes, puertas y ventanas</td><td>Pintura y decoración</td><td>Electricidad e interruptores</td></tr>
+            <tr><th>Ejemplo</th><td><code>&lt;button&gt;Enviar&lt;/button&gt;</code></td><td><code>button { color: blue; }</code></td><td><code>boton.addEventListener('click', …)</code></td></tr>
+            <tr><th>¿Funciona solo en el navegador?</th><td>Sí, aunque se ve muy simple</td><td>No: necesita HTML para pintar</td><td>No: necesita HTML para manipular</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ 5. EL NAVEGADOR PASO A PASO ============ -->
+    <section id="navegador" class="section">
+      <header class="section-head reveal">
+        <span class="eyebrow">Paso 4 · Por dentro</span>
+        <h2>¿Qué hace el navegador con los tres archivos?</h2>
+        <p>Avanza paso a paso para ver en qué orden se usa cada capa.</p>
+      </header>
+
+      <div class="pipeline reveal" id="pipeline" data-step="0">
+        <div class="pl-col">
+          <h4>Archivos</h4>
+          <div class="file f-html"><span>📄</span>index.html</div>
+          <div class="file f-css"><span>🎨</span>styles.css</div>
+          <div class="file f-js"><span>⚡</span>script.js</div>
+        </div>
+        <div class="pl-arrow a1" aria-hidden="true">→</div>
+        <div class="pl-col">
+          <h4>Árbol DOM</h4>
+          <ul class="tree">
+            <li style="--l:0;--i:0"><span class="nd">html</span></li>
+            <li style="--l:1;--i:1"><span class="nd">head</span></li>
+            <li style="--l:1;--i:2"><span class="nd">body</span></li>
+            <li style="--l:2;--i:3"><span class="nd">article</span></li>
+            <li style="--l:3;--i:4"><span class="nd">h2</span><span class="nd-txt">"Laura Gómez"</span></li>
+            <li style="--l:3;--i:5"><span class="nd">p</span><span class="nd-txt">"Estudiante…"</span></li>
+            <li style="--l:3;--i:6" class="nd-btn"><span class="nd">button</span><span class="nd-txt">"❤️ <span id="pl-dom-count">0</span>"</span></li>
+          </ul>
+        </div>
+        <div class="pl-arrow a2" aria-hidden="true">→</div>
+        <div class="pl-col">
+          <h4>Pantalla</h4>
+          <div class="screen">
+            <div class="screen-empty">Pantalla en blanco</div>
+            <div class="mini-card">
+              <div class="mc-avatar">LG</div>
+              <div class="mc-name">Laura Gómez</div>
+              <div class="mc-role">Estudiante…</div>
+              <div class="mc-btn">❤️ <span id="pl-count">0</span></div>
+            </div>
+            <div class="cursor" aria-hidden="true">👆</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pl-caption reveal">
+        <span class="pl-num" id="pl-num"></span>
+        <h3 id="pl-title"></h3>
+        <p id="pl-text"></p>
+      </div>
+
+      <div class="pl-controls">
+        <button class="btn btn-ghost" id="pl-prev">← Anterior</button>
+        <div class="pl-dots" id="pl-dots"></div>
+        <button class="btn btn-primary" id="pl-next">Siguiente →</button>
+        <button class="btn btn-ghost" id="pl-play">▶ Automático</button>
+      </div>
+    </section>
+
+    <!-- ============ 6. QUIZ ============ -->
+    <section id="quiz" class="section">
+      <header class="section-head reveal">
+        <span class="eyebrow">Paso 5 · Comprueba</span>
+        <h2>¿Quedó claro? Mini quiz</h2>
+        <p>Siete preguntas rápidas para repasar.</p>
+      </header>
+
+      <div class="quiz reveal" id="quiz-box">
+        <div class="quiz-progress"><span id="quiz-bar"></span></div>
+        <div id="quiz-body"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>
+      <span class="brand-dots"><i class="d-html"></i><i class="d-css"></i><i class="d-js"></i></span>
+      Hecho solo con HTML, CSS y JavaScript, sin frameworks. Presiona <kbd>Ctrl</kbd> + <kbd>U</kbd> para ver el código fuente.
+    </p>
+  </footer>
+
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
